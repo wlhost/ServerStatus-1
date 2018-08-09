@@ -314,9 +314,22 @@ function uptime() {
 	});
 }
 
+function formateDate(date) {
+    var date = new Date(date);
+	var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var h = date.getHours();
+    var mi = date.getMinutes();
+    var s = date.getSeconds();
+    mi = mi > 9 ? mi : '0' + mi;
+    s = s > 9 ? s : '0' + s;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + mi + ':' + s;
+}
+
 function updateTime() {
 	if (!error)
-		$("#updated").html("最后更新: " + timeSince(d));
+		$("#updated").html("最后更新: " + formateDate(d));
 }
 
 uptime();
