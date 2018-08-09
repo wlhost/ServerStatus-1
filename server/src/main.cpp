@@ -239,15 +239,12 @@ void CMain::JSONUpdateThread(void *pUser)
 				// Uptime
 				char aUptime[16];
 				int Days = pClients[i].m_Stats.m_Uptime/60.0/60.0/24.0;
-				if(Days > 0)
+				if(Days < 1)
 				{
-					if(Days > 1)
-						str_format(aUptime, sizeof(aUptime), "%d 天", Days);
-					else
-						str_format(aUptime, sizeof(aUptime), "%d 天", Days);
+					str_format(aUptime, sizeof(aUptime), "%02d:%02d:%02d", (int)(pClients[i].m_Stats.m_Uptime/60.0/60.0), (int)((pClients[i].m_Stats.m_Uptime/60)%60), (int)((pClients[i].m_Stats.m_Uptime)%60));
 				}
 				else
-					str_format(aUptime, sizeof(aUptime), "%02d:%02d:%02d", (int)(pClients[i].m_Stats.m_Uptime/60.0/60.0), (int)((pClients[i].m_Stats.m_Uptime/60)%60), (int)((pClients[i].m_Stats.m_Uptime)%60));
+					str_format(aUptime, sizeof(aUptime), "%d天 %02d:%02d:%02d", Days, (int)((pClients[i].m_Stats.m_Uptime/60/60)%24), (int)((pClients[i].m_Stats.m_Uptime/60)%60), (int)((pClients[i].m_Stats.m_Uptime)%60));
 
 				str_format(pBuf, sizeof(aFileBuf) - (pBuf - aFileBuf),
 				 "{ \"name\": \"%s\",\"type\": \"%s\",\"host\": \"%s\",\"location\": \"%s\",\"online4\": %s, \"online6\": %s,\"ip_status\": %s,\"uptime\": \"%s\",\"load_1\": %.2f, \"load_5\": %.2f, \"load_15\": %.2f,\"network_rx\": %" PRId64 ", \"network_tx\": %" PRId64 ", \"network_in\": %" PRId64 ", \"network_out\": %" PRId64 ", \"cpu\": %d, \"memory_total\": %" PRId64 ", \"memory_used\": %" PRId64 ", \"swap_total\": %" PRId64 ", \"swap_used\": %" PRId64 ", \"hdd_total\": %" PRId64 ", \"hdd_used\": %" PRId64 ", \"custom\": \"%s\" },\n",
